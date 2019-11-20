@@ -1,5 +1,4 @@
-import sqlalchemy
-import pymysql
+import sqlalchemy, os
 import pandas as pd
 import datetime
 
@@ -22,7 +21,12 @@ def inserir_csv(valor1, valor2, valor3, valor4):
         }
 
     df = pd.DataFrame(carga, columns=['id', 'id_carga', 'datetime', 'carga', 'id_usuario'])
-    df.to_csv (r'C:\Users\hugob\PycharmProjects\Prospecting-habits-of-electricity-consumption-through-automation-and-voice-assistant\export_dataframe.csv', mode ='a', index = None, header=False) #Don't forget to add '.csv' at the end of the path
+    if os.path.isfile('./export_dataframe.csv'):
+        df.to_csv (r'C:\Users\hugob\PycharmProjects\Prospecting-habits-of-electricity-consumption-through-automation-and-voice-assistant\export_dataframe.csv', mode ='a', index = None, header=False) #Don't forget to add '.csv' at the end of the path
+    else:
+        df.to_csv(
+            r'C:\Users\hugob\PycharmProjects\Prospecting-habits-of-electricity-consumption-through-automation-and-voice-assistant\export_dataframe.csv',
+            mode='a', index=None, header=True)
 
     return df
 
@@ -34,16 +38,17 @@ def csv_to_aws():
 
     df = pd.read_csv(r'C:\Users\hugob\PycharmProjects\Prospecting-habits-of-electricity-consumption-through-automation-and-voice-assistant\export_dataframe.csv')
 
-    print(df)
-
     with db_connection.connect() as conn, conn.begin():
         df.to_sql('carga', conn, if_exists='append', index=False)
 
+    os.remove(r'C:\Users\hugob\PycharmProjects\Prospecting-habits-of-electricity-consumption-through-automation-and-voice-assistant\export_dataframe.csv')
+
+    return "Enviado para AWS CLOUD e deletado banco local"
+
 
 if __name__ == '__main__':
-    print(ler_aws())
-    # print(inserir_csv('4','4','4','4'))
+    # print(ler_aws())
+    # print(inserir_csv('6','6','6','6'))
     csv_to_aws()
-
-    print(ler_aws())
+    # print(ler_aws())
 
