@@ -2,6 +2,7 @@ import sqlalchemy, os
 import pandas as pd
 import datetime
 
+
 def ler_aws():
 
     db_connection_str = 'mysql+pymysql://admin:98970242@aa1wojbkfs1xdfb.czzvknxexeho.us-east-1.rds.amazonaws.com/house'

@@ -19,14 +19,14 @@ while True:
             texto = r.recognize_google(audio, language="pt-BR")
             print("Você disse: {}".format(texto))
             # engine.say("Entendi mestre Hugo, você falou: {}".format(texto))
-            if re.search('maria', texto, re.IGNORECASE):
+            if re.search('Ana', texto, re.IGNORECASE):
                 engine.say("Chamou mestre?")
-            if re.search('tudo bem?', texto, re.IGNORECASE):
+            if re.search('Ana, tudo bem?', texto, re.IGNORECASE):
                 engine.say("Tudo ótimo comigo, obrigada!")
-            if re.search('ligar luz', texto, re.IGNORECASE):
-                engine.say("É pra já mestre!")
-            if re.search('desligar luz', texto, re.IGNORECASE):
-                engine.say("Agora mesmo")
+            if re.search('Ana, ligar luz', texto, re.IGNORECASE):
+                engine.say("É pra já mestre! Ligando")
+            if re.search('Ana, desligar luz', texto, re.IGNORECASE):
+                engine.say("Agora mesmo. Desligando")
 
             # engine.say("OK, ligando!")
             engine.runAndWait()
